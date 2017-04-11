@@ -20,6 +20,7 @@ public class CodigoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        enviar = (Button) findViewById(R.id.enviar);
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

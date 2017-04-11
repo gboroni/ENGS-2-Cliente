@@ -6,10 +6,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.ufs.sicaa.adapter.AlunoAdapter;
 import com.ufs.sicaa.adapter.AvaliacaoAdapter;
+import com.ufs.sicaa.model.Aluno;
 import com.ufs.sicaa.model.Criterio;
 import com.ufs.sicaa.request.ApresentacoesServiceWS;
 import com.ufs.sicaa.ws.IServiceApresentacoesListener;
@@ -36,7 +39,7 @@ public class AvaliarActivity extends AppCompatActivity implements IServiceAprese
 
         progress = ProgressDialog.show(this, "",
                 "Carregando...", false);
-        new ApresentacoesServiceWS(this).execute("6");
+        new ApresentacoesServiceWS(this).execute("3");
 
 
         listView = (ListView) findViewById(R.id.listView);
@@ -48,12 +51,18 @@ public class AvaliarActivity extends AppCompatActivity implements IServiceAprese
     @Override
     public void onPostExecuteFinish(String result) {
         try {
+
+            Log.e(">>>>>>>>>>>>>>>>>>",result);
             JSONObject j = new JSONObject(result);
 
 
             List<Criterio> criterios = new ArrayList<>();
 
-            JSONArray jsonArray = j.getJSONArray("result");
+            List<Aluno> alunos = new ArrayList<>();
+
+            JSONArray jsonArray = j.getJSONArray("criterios");
+
+            JSONArray jsonArrayAlunos = j.getJSONArray("alunos");
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -67,7 +76,24 @@ public class AvaliarActivity extends AppCompatActivity implements IServiceAprese
                criterios.add( new Criterio(id, id_criterio, id_apresentacao, descricao_criterio, peso_criterio));
 
             }
-            listView.setAdapter(new AvaliacaoAdapter(AvaliarActivity.this, R.layout.row_avaliacao, criterios));
+
+            for (int i = 0; i < jsonArrayAlunos.length(); i++) {
+                JSONObject jsonObject = jsonArrayAlunos.getJSONObject(i);
+
+                int id = jsonObject.optInt("id", 0);
+                int id_aluno = jsonObject.optInt("id_aluno", 0);
+                int id_turma = jsonObject.optInt("id_turma", 0);
+                int id_apresentacao = jsonObject.optInt("id_apresentacao", 0);
+                String matricula_aluno = jsonObject.optString("matricula_aluno", "");
+                String nome_aluno = jsonObject.optString("nome_aluno", "");
+                String codigo_turma = jsonObject.optString("codigo_turma", "");
+
+                alunos.add( new Aluno( id , id_aluno, id_turma, id_apresentacao, matricula_aluno, nome_aluno, codigo_turma));
+
+            }
+
+            listView.setAdapter(new AlunoAdapter(AvaliarActivity.this, R.layout.row_aluno, alunos));
+//            listView.setAdapter(new AvaliacaoAdapter(AvaliarActivity.this, R.layout.row_avaliacao, criterios));
             progress.dismiss();
         } catch (JSONException e) {
             progress.dismiss();

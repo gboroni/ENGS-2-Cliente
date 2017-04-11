@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.ufs.sicaa.R;
+import com.ufs.sicaa.model.Aluno;
 import com.ufs.sicaa.model.Criterio;
 
 import java.util.List;
@@ -16,15 +17,15 @@ import java.util.List;
  * Created by guilhermeboroni on 09/04/17.
  */
 
-public class AvaliacaoAdapter extends ArrayAdapter<Criterio> {
+public class AlunoAdapter extends ArrayAdapter<Aluno> {
 
 private Context ctx;
 
-public AvaliacaoAdapter(Context context, int textViewResourceId) {
+public AlunoAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         }
 
-public AvaliacaoAdapter(Context context, int resource, List<Criterio> items) {
+public AlunoAdapter(Context context, int resource, List<Aluno> items) {
         super(context, resource, items);
         }
 
@@ -40,11 +41,11 @@ public View getView(final int position, View convertView, ViewGroup parent) {
         if (v == null) {
         LayoutInflater vi;
         vi = LayoutInflater.from(getContext());
-        v = vi.inflate(R.layout.row_avaliacao, null);
+        v = vi.inflate(R.layout.row_aluno, null);
         }
 
-        TextView criterio = (TextView) v.findViewById(R.id.criterio);
-        criterio.setText(getItem(position).getDescricao_criterio());
+        TextView nome = (TextView) v.findViewById(R.id.nome);
+    nome.setText(getItem(position).getMatricula_aluno() + " - " + getItem(position).getNome_aluno());
 
         return v;
         }

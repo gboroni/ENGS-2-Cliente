@@ -5,8 +5,6 @@ import android.os.AsyncTask;
 import com.ufs.sicaa.util.Constants;
 import com.ufs.sicaa.ws.IServiceAsyncListener;
 
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,11 +20,11 @@ import java.net.URL;
  */
 
 
-public class ApresentacoesServiceWS extends AsyncTask<String, Void, String> {
+public class AvaliacaoServiceWS extends AsyncTask<String, Void, String> {
 
     private IServiceAsyncListener listenerResponse;
 
-    public ApresentacoesServiceWS(IServiceAsyncListener listenerResponse){
+    public AvaliacaoServiceWS(IServiceAsyncListener listenerResponse){
         this.listenerResponse = listenerResponse;
     }
 
@@ -42,7 +40,7 @@ public class ApresentacoesServiceWS extends AsyncTask<String, Void, String> {
         String responseText = "";
             try {
                 String url_s = Constants.URL_APRESENTACOES;
-                url_s += params[0];
+                url_s +=
                 url = new URL(url_s);
 
 
@@ -58,10 +56,10 @@ public class ApresentacoesServiceWS extends AsyncTask<String, Void, String> {
 
 
 
-//                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
 //                wr.write(body.toString());
 //                wr.write(cript(body.toString()));
-//                wr.flush();
+                wr.flush();
 
                 // Starts the query
                 conn.connect();
