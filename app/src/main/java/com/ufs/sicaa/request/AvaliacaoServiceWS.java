@@ -40,7 +40,7 @@ public class AvaliacaoServiceWS extends AsyncTask<String, Void, String> {
         String responseText = "";
             try {
                 String url_s = Constants.URL_APRESENTACOES;
-                url_s +=
+                url_s += params[0];
                 url = new URL(url_s);
 
 

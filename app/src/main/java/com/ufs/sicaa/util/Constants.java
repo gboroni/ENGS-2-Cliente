@@ -5,7 +5,7 @@ package com.ufs.sicaa.util;
  */
 
 public class Constants {
-    public static final String URL_BASE = "http://10.2.2.12:8080/api/";
+    public static final String URL_BASE = "http://192.168.56.1:8080/api/";
 
     public static final String URL_APRESENTACOES = URL_BASE + "apresentacao/";
 }
