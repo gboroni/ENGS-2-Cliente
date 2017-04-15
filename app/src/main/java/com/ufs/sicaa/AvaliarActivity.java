@@ -1,6 +1,7 @@
 package com.ufs.sicaa;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ufs.sicaa.adapter.AlunoAdapter;
@@ -15,6 +17,7 @@ import com.ufs.sicaa.adapter.AvaliacaoAdapter;
 import com.ufs.sicaa.model.Aluno;
 import com.ufs.sicaa.model.Criterio;
 import com.ufs.sicaa.request.ApresentacoesServiceWS;
+import com.ufs.sicaa.util.Singleton;
 import com.ufs.sicaa.ws.IServiceApresentacoesListener;
 
 import org.json.JSONArray;
@@ -39,11 +42,18 @@ public class AvaliarActivity extends AppCompatActivity implements IServiceAprese
 
         progress = ProgressDialog.show(this, "",
                 "Carregando...", false);
-        new ApresentacoesServiceWS(this).execute("3");
+        new ApresentacoesServiceWS(this).execute("5");
 
 
         listView = (ListView) findViewById(R.id.listView);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                Intent i = new Intent (AvaliarActivity.this, CriteriosActivity.class);
+                startActivity(i);
+            }
+        });
 
 
     }
@@ -91,6 +101,9 @@ public class AvaliarActivity extends AppCompatActivity implements IServiceAprese
                 alunos.add( new Aluno( id , id_aluno, id_turma, id_apresentacao, matricula_aluno, nome_aluno, codigo_turma));
 
             }
+
+            Singleton.getInstance().setCriterios(criterios);
+            Singleton.getInstance().setAlunos(alunos);
 
             listView.setAdapter(new AlunoAdapter(AvaliarActivity.this, R.layout.row_aluno, alunos));
 //            listView.setAdapter(new AvaliacaoAdapter(AvaliarActivity.this, R.layout.row_avaliacao, criterios));

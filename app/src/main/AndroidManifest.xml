@@ -28,6 +28,10 @@
         <activity
             android:name=".AvaliarActivity"
             android:label="@string/title_activity_avaliar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CriteriosActivity"
+            android:label="@string/title_activity_criterios"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
