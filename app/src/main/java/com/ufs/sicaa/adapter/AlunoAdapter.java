@@ -45,7 +45,7 @@ public View getView(final int position, View convertView, ViewGroup parent) {
         }
 
         TextView nome = (TextView) v.findViewById(R.id.nome);
-    nome.setText(getItem(position).getMatricula_aluno() + " - " + getItem(position).getNome_aluno());
+        nome.setText(getItem(position).getMatricula_aluno() + " - " + getItem(position).getNome_aluno());
 
         return v;
         }

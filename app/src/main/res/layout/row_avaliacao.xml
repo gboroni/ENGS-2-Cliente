@@ -20,11 +20,11 @@
             android:text="Nome do crietio: Nome do crietio: Nome do crietio: Nome do crietio:" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/nota"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:hint="Nota" />
 
     </LinearLayout>

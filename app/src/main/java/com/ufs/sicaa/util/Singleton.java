@@ -2,6 +2,7 @@ package com.ufs.sicaa.util;
 
 import com.ufs.sicaa.model.Aluno;
 import com.ufs.sicaa.model.Criterio;
+import com.ufs.sicaa.model.Usuario;
 
 import java.util.List;
 
@@ -12,6 +13,10 @@ import java.util.List;
 public class Singleton {
 
     private static Singleton instance;
+
+    private Usuario usuario;
+
+    private Aluno alunoAvaliado;
 
     private List<Aluno> alunos;
 
@@ -42,5 +47,21 @@ public class Singleton {
 
     public void setCriterios(List<Criterio> criterios) {
         this.criterios = criterios;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Aluno getAlunoAvaliado() {
+        return alunoAvaliado;
+    }
+
+    public void setAlunoAvaliado(Aluno alunoAvaliado) {
+        this.alunoAvaliado = alunoAvaliado;
     }
 }

@@ -1,8 +1,10 @@
 package com.ufs.sicaa.request;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.ufs.sicaa.util.Constants;
+import com.ufs.sicaa.util.Singleton;
 import com.ufs.sicaa.ws.IServiceAsyncListener;
 
 import java.io.BufferedReader;
@@ -39,10 +41,16 @@ public class AvaliacaoServiceWS extends AsyncTask<String, Void, String> {
         InputStream is = null;
         String responseText = "";
             try {
-                String url_s = Constants.URL_APRESENTACOES;
-                url_s += params[0];
+                Singleton sing = Singleton.getInstance();
+                String url_s = Constants.URL_AVALIACAO;
+                url_s += params[1]+"/";//criterio
+                url_s += params[0]+"/";//nota
+                url_s += sing.getAlunoAvaliado().getId()+"/";
+                url_s += sing.getUsuario().getMatricula()+"/";
+                url_s += sing.getAlunoAvaliado().getId_apresentacao();
                 url = new URL(url_s);
 
+                Log.e("URL>>>>>>",url_s);
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000 /* milliseconds */);
@@ -54,12 +62,6 @@ public class AvaliacaoServiceWS extends AsyncTask<String, Void, String> {
 //                String encoded = Base64.encodeToString((Constants.AUTH_USER+":"+ Constants.AUTH_PASS).getBytes(),Base64.DEFAULT);
 //                conn.setRequestProperty("Authorization", "Basic "+encoded);
 
-
-
-                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-//                wr.write(body.toString());
-//                wr.write(cript(body.toString()));
-                wr.flush();
 
                 // Starts the query
                 conn.connect();
