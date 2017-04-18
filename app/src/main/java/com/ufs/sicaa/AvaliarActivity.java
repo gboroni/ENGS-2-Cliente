@@ -42,7 +42,7 @@ public class AvaliarActivity extends AppCompatActivity implements IServiceAprese
 
         progress = ProgressDialog.show(this, "",
                 "Carregando...", false);
-        new ApresentacoesServiceWS(this).execute("5");
+        new ApresentacoesServiceWS(this).execute("3");
 
 
         listView = (ListView) findViewById(R.id.listView);
