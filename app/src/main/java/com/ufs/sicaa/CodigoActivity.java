@@ -25,7 +25,7 @@ public class CodigoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setTitle("Pesquisar apresentaçãoboro");
+        setTitle("Pesquisar apresentação");
         codigo = (EditText) findViewById(R.id.codigo);
 
         enviar = (Button) findViewById(R.id.enviar);

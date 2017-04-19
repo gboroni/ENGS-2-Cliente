@@ -15,18 +15,20 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.ufs.sicaa.model.Usuario;
+import com.ufs.sicaa.request.AlunoServiceWS;
 import com.ufs.sicaa.request.ApresentacoesServiceWS;
 import com.ufs.sicaa.request.LoginServiceWS;
 import com.ufs.sicaa.util.Alert;
 import com.ufs.sicaa.util.Constants;
 import com.ufs.sicaa.util.Security;
 import com.ufs.sicaa.util.Singleton;
+import com.ufs.sicaa.ws.IServiceAlunosListener;
 import com.ufs.sicaa.ws.IServiceApresentacoesListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity implements IServiceApresentacoesListener {
+public class MainActivity extends AppCompatActivity implements IServiceApresentacoesListener, IServiceAlunosListener {
 
     private Button login;
 
@@ -64,23 +66,51 @@ public class MainActivity extends AppCompatActivity implements IServiceApresenta
             Log.e(">>>>>>>>>>>>>>>>>>",result);
             JSONObject j = new JSONObject(result);
 
-            progress.dismiss();
-
             String erro = j.optString("tag","");
 
             String msg = j.optString("error","");
 
             if (erro.toLowerCase().equals("erro".toLowerCase())){
                 Alert.showInfoAlert("Erro",msg, MainActivity.this);
+                progress.dismiss();
             }else {
                 String nome = j.optString("nome","");
                 String matricula = j.optString("matricula","");
                 Usuario u = new Usuario(0,nome,matricula);
                 Singleton.getInstance().setUsuario(u);
-                Intent i = new Intent(MainActivity.this, CodigoActivity.class);
-                startActivity(i);
-                this.finish();
+                new AlunoServiceWS(MainActivity.this).execute(matricula,nome);
             }
+        } catch (JSONException e) {
+            progress.dismiss();
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onPostExecuteAlternativeFinish(String result) {
+        try {
+
+            if (result.equals("")){
+                Alert.showInfoAlert("Erro","Falha na comunicação com o servidor, tente mais tarde.",MainActivity.this);
+                progress.dismiss();
+                return;
+            }
+
+            Log.e(">>>>>>>>>>>>>>>>>>",result);
+            JSONObject j = new JSONObject(result);
+
+            progress.dismiss();
+
+            int erro = j.optInt("erro",-1);
+
+           if (erro == 0){
+               Intent i = new Intent(MainActivity.this, CodigoActivity.class);
+               startActivity(i);
+               this.finish();
+           }else{
+               Alert.showInfoAlert("Erro","Falha ao conectar com o servidor, tente novamente mais tarde.",MainActivity.this);
+           }
         } catch (JSONException e) {
             progress.dismiss();
             e.printStackTrace();
