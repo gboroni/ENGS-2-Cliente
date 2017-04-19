@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements IServiceApresenta
                 Singleton.getInstance().setUsuario(u);
                 Intent i = new Intent(MainActivity.this, CodigoActivity.class);
                 startActivity(i);
+                this.finish();
             }
         } catch (JSONException e) {
             progress.dismiss();

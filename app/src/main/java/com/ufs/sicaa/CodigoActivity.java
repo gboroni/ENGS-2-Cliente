@@ -8,10 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.ufs.sicaa.util.Singleton;
 
 public class CodigoActivity extends AppCompatActivity {
 
     private Button enviar;
+
+    private EditText codigo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +25,20 @@ public class CodigoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setTitle("Pesquisar apresentaçãoboro");
+        codigo = (EditText) findViewById(R.id.codigo);
+
         enviar = (Button) findViewById(R.id.enviar);
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(CodigoActivity.this, AvaliarActivity.class);
-                startActivity(i);
+                if (codigo.getText().toString().trim().equals("")){
+                    codigo.setError("Informe o código da apresentação");
+                }else {
+                    Singleton.getInstance().setCodigoApresentacao(codigo.getText().toString());
+                    Intent i = new Intent(CodigoActivity.this, AvaliarActivity.class);
+                    startActivity(i);
+                }
             }
         });
 

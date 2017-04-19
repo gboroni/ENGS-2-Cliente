@@ -14,6 +14,8 @@ public class Singleton {
 
     private static Singleton instance;
 
+    private String codigoApresentacao;
+
     private Usuario usuario;
 
     private Aluno alunoAvaliado;
@@ -63,5 +65,13 @@ public class Singleton {
 
     public void setAlunoAvaliado(Aluno alunoAvaliado) {
         this.alunoAvaliado = alunoAvaliado;
+    }
+
+    public String getCodigoApresentacao() {
+        return codigoApresentacao;
+    }
+
+    public void setCodigoApresentacao(String codigoApresentacao) {
+        this.codigoApresentacao = codigoApresentacao;
     }
 }

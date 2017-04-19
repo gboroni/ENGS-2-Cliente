@@ -22,5 +22,23 @@ public class Alert {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+    public static void showAlertCloseActivity(String title, String message, final Context ctx,final Activity a){
+        new AlertDialog.Builder(ctx)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        a.finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
 
 }

@@ -44,6 +44,10 @@ public class CriteriosActivity extends AppCompatActivity implements IServiceApre
 
         setTitle("Avaliar " + Singleton.getInstance().getAlunoAvaliado().getNome_aluno());
 
+        if (Singleton.getInstance().getCriterios().isEmpty()){
+            Alert.showAlertCloseActivity("","Os critérios a serem avaliados ainda não foram cadastrados, informe seu professor!",this,this);
+        }
+
         listView = (ListView) findViewById(R.id.listView);
 
         listView.setAdapter(new AvaliacaoAdapter(CriteriosActivity.this, R.layout.row_avaliacao, Singleton.getInstance().getCriterios()));
@@ -122,12 +126,12 @@ public class CriteriosActivity extends AppCompatActivity implements IServiceApre
 
             progress.dismiss();
 
-            int erro = j.optInt("erro",-1);
+            int erro = j.optInt("erro",0);
 
             String msg = j.optString("mensagem","");
 
             if (erro == 0){
-                Alert.showInfoAlert("Sucesso",msg, CriteriosActivity.this);
+                Alert.showAlertCloseActivity("Sucesso",msg, CriteriosActivity.this,CriteriosActivity.this);
             }
         } catch (JSONException e) {
             progress.dismiss();

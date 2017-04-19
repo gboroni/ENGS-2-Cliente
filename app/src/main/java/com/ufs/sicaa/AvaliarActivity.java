@@ -17,6 +17,7 @@ import com.ufs.sicaa.adapter.AvaliacaoAdapter;
 import com.ufs.sicaa.model.Aluno;
 import com.ufs.sicaa.model.Criterio;
 import com.ufs.sicaa.request.ApresentacoesServiceWS;
+import com.ufs.sicaa.util.Alert;
 import com.ufs.sicaa.util.Singleton;
 import com.ufs.sicaa.ws.IServiceApresentacoesListener;
 
@@ -40,9 +41,10 @@ public class AvaliarActivity extends AppCompatActivity implements IServiceAprese
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setTitle("Apresentadores");
         progress = ProgressDialog.show(this, "",
                 "Carregando...", false);
-        new ApresentacoesServiceWS(this).execute("3");
+        new ApresentacoesServiceWS(this).execute(Singleton.getInstance().getCodigoApresentacao());
 
 
         listView = (ListView) findViewById(R.id.listView);
@@ -66,6 +68,12 @@ public class AvaliarActivity extends AppCompatActivity implements IServiceAprese
             Log.e(">>>>>>>>>>>>>>>>>>",result);
             JSONObject j = new JSONObject(result);
 
+            Integer erro = j.optInt("erro",0);
+
+            if (erro != 0){
+                String msg = j.optString("mensagem","Falha ao recuperar apresentação");
+                Alert.showAlertCloseActivity("Erro",msg,this,this);
+            }
 
             List<Criterio> criterios = new ArrayList<>();
 
@@ -101,6 +109,10 @@ public class AvaliarActivity extends AppCompatActivity implements IServiceAprese
 
                 alunos.add( new Aluno( id , id_aluno, id_turma, id_apresentacao, matricula_aluno, nome_aluno, codigo_turma));
 
+            }
+
+            if (alunos.isEmpty()){
+                Alert.showAlertCloseActivity("","Os apresentadores ainda não foram cadastrados nesta apresentação, informe seu professor!",this,this);
             }
 
             Singleton.getInstance().setCriterios(criterios);
