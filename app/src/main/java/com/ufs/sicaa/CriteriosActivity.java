@@ -150,6 +150,8 @@ public class CriteriosActivity extends AppCompatActivity implements IServiceApre
 
             if (erro == 0){
                 Alert.showAlertCloseActivity("Sucesso",msg, CriteriosActivity.this,CriteriosActivity.this);
+            }else{
+                Alert.showInfoAlert("Erro",msg, CriteriosActivity.this);
             }
         } catch (JSONException e) {
             progress.dismiss();
