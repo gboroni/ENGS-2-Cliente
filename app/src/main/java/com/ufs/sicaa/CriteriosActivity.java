@@ -67,10 +67,19 @@ public class CriteriosActivity extends AppCompatActivity implements IServiceApre
             EditText editText = (EditText) view.findViewById(R.id.nota);
             String string = editText.getText().toString();
             result += string;
+            Double nota = Double.valueOf(string);
             if (string.trim().equals("")){
                 editText.setError("Informe a nota");
                 error = true;
+            }else if (nota == null){
+                editText.setError("Nota inválida");
+                error = true;
+            }else if (nota > 10.0 || nota < 0.0){
+                editText.setError("A nota deve ser entre 0 e 10");
+                error = true;
             }
+
+
         }
         return (error) ? "" : result;
     }
