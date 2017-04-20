@@ -67,16 +67,19 @@ public class CriteriosActivity extends AppCompatActivity implements IServiceApre
             EditText editText = (EditText) view.findViewById(R.id.nota);
             String string = editText.getText().toString();
             result += string;
-            Double nota = Double.valueOf(string);
+
             if (string.trim().equals("")){
                 editText.setError("Informe a nota");
                 error = true;
-            }else if (nota == null){
-                editText.setError("Nota inválida");
-                error = true;
-            }else if (nota > 10.0 || nota < 0.0){
-                editText.setError("A nota deve ser entre 0 e 10");
-                error = true;
+            }else{
+                Double nota = Double.valueOf(string);
+                if (nota == null){
+                    editText.setError("Nota inválida");
+                    error = true;
+                }else if (nota > 10.0 || nota < 0.0){
+                    editText.setError("A nota deve ser entre 0 e 10");
+                    error = true;
+                }
             }
 
 
@@ -129,6 +132,12 @@ public class CriteriosActivity extends AppCompatActivity implements IServiceApre
     @Override
     public void onPostExecuteFinish(String result) {
         try {
+
+            if (result.equals("")){
+                Alert.showInfoAlert("Erro","Falha na comunicação com o servidor, verifique sua conexão.",CriteriosActivity.this);
+                progress.dismiss();
+                return;
+            }
 
             Log.e(">>>>>>>>>>>>>>>>>>",result);
             JSONObject j = new JSONObject(result);

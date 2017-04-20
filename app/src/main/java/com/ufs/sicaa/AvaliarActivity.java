@@ -65,6 +65,13 @@ public class AvaliarActivity extends AppCompatActivity implements IServiceAprese
     public void onPostExecuteFinish(String result) {
         try {
 
+
+            if (result.equals("")){
+                Alert.showAlertCloseActivity("Erro","Falha na comunicação com o servidor, verifique sua conexão.",AvaliarActivity.this,AvaliarActivity.this);
+                progress.dismiss();
+                return;
+            }
+
             Log.e(">>>>>>>>>>>>>>>>>>",result);
             JSONObject j = new JSONObject(result);
 

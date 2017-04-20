@@ -63,6 +63,12 @@ public class MainActivity extends AppCompatActivity implements IServiceApresenta
     public void onPostExecuteFinish(String result) {
         try {
 
+            if (result.equals("")){
+                Alert.showInfoAlert("Erro","Falha na comunicação com o servidor, verifique sua conexão.",MainActivity.this);
+                progress.dismiss();
+                return;
+            }
+
             Log.e(">>>>>>>>>>>>>>>>>>",result);
             JSONObject j = new JSONObject(result);
 
